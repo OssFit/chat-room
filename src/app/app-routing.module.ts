@@ -13,25 +13,24 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: LandingComponent
+        component: LandingComponent,
       },
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
       },
       {
         path: 'sign-up',
-        component: SignUpComponent
+        component: SignUpComponent,
       },
-      {path:'chatroom', component:ChatroomComponent,
-        },
-    ]
-  ,
-    },
+      { path: 'chatroom',
+        component: ChatroomComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
