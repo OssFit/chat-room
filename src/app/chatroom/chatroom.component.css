@@ -1,8 +1,8 @@
 #background{
   position: absolute;
-  top: 100px;
+  top: 10vh;
   left: 0;
-  bottom: 10vh;
+  height: 80vh;
 }
 .column{
   float: left;

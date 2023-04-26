@@ -20,9 +20,9 @@ import { ChatroomComponent } from './chatroom/chatroom.component';
     SignUpComponent,
     HeaderComponent,
     LandingComponent,
-    FooterComponent,
     LayoutComponent,
-    ChatroomComponent
+    ChatroomComponent,
+    FooterComponent,
   ],
   imports: [
     FormsModule,
