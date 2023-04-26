@@ -1,8 +1,12 @@
 <div class="w-[100vw] h-[100vh] flex flex-col justify-center items-center">
   <h1 class="text-xl ">Welcome to the Chat-room!</h1>
-  <p class="text-gray">Please Login</p>
+  <p class="text-gray-800">Please complete the register form</p>
 
-<form class="flex flex-col justify-center items-center min-w-[20vw] h-[35vh] border border-blue-400 rounded-xl bg-slate-300 gap-3">
+<form class="flex flex-col justify-center items-center min-w-[20vw] h-[45vh] border border-blue-400 rounded-xl bg-slate-300 gap-3">
+  <label class="w-full px-4 text-gray-700">
+    Name:
+    <input placeholder=" Name" class=" w-full focus:outline-none focus:border-blue-600 border-blue-400 border rounded-md" type="text" name="name">
+  </label>
   <label class="w-full px-4 text-gray-700">
     Email:
     <input placeholder=" Email" class=" w-full focus:outline-none focus:border-blue-600 border-blue-400 border rounded-md" type="email" name="email">
@@ -12,9 +16,10 @@
     <input placeholder=" Password" class=" w-full focus:outline-none focus:border-blue-600 border-blue-400 border rounded-md" type="password" name="password">
   </label>
   <div class="flex flex-row">
-  <p class="text-xs">You Don't have an account? </p><p class="text-xs"> Sing Up</p>
+  <p class="text-xs">You have allready an account? </p><p class="text-xs"> Log in</p>
 </div>
   <button class="inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal bg-blue-500 text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-blue-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]" type="submit">
- Login</button>
+ Sign Up</button>
 </form>
 </div>
+
