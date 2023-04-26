@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component,Input } from '@angular/core';
+import { AuthService } from '../auth-service.service';
+import { Router } from '@angular/router';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-login',
@@ -6,11 +10,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string | undefined;
-  password:string | undefined;
+  @Input()
+  email!: string;
+  @Input() password!: string;
+
+  constructor(private Auth:AuthService,private router:Router){
+
+  }
 
   onSubmit(){
-    console.log('login submit');
+    this.Auth.post('https://dummyjson.com/auth/login',{username:this.email,password:this.password},"/")
+
   }
 
 }

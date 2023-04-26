@@ -1,0 +1,12 @@
+/* Estilos para texto en modo oscuro */
+.dark:text-gray-100 {
+  color: #f7fafc;
+}
+
+/* Estilos para fondo en modo oscuro */
+html{
+  background-color: white;
+}
+.dark:bg-gray-900 {
+background-color: #1a202c;
+}
