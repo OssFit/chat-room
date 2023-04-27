@@ -3,3 +3,19 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+*
+*::after,
+*::before{
+  margin:0
+}
+
+:root{
+  --bg-color:'black';
+  --text-color:'black'
+}
+
+[data-theme="dark"]{
+  --bg-color:'white';
+  --text-color:"white";
+}
+

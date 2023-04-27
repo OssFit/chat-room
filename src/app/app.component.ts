@@ -6,8 +6,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'chat-room';
-  isDarkMode = false;
+  title!:string
+  darkMode=false
+  constructor(){
+    this.detectColorScheme()
+  }
+detectColorScheme(){
+  if(window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches){
+    document.documentElement.setAttribute('data-theme',this.darkMode?'dark':'light')
+  }
+}
 
+toggleClick(){
+  this.darkMode=!this.darkMode;
+  document.documentElement.setAttribute('data-theme',this.darkMode?'dark':'light')
+}
 
 }
