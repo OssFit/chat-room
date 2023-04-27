@@ -19,7 +19,7 @@ export class LoginComponent {
   }
 
   onSubmit(){
-    this.Auth.post('https://dummyjson.com/auth/login',{username:this.email,password:this.password},"/")
+    this.Auth.post('https://dummyjson.com/auth/login',{username:this.email,password:this.password},"/chatroom")
 
   }
 
