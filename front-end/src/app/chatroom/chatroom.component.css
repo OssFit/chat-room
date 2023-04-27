@@ -1,0 +1,50 @@
+#background{
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  height: 80vh;
+}
+.column{
+  float: left;
+  height: 100%;
+  color:antiquewhite
+}
+.searchHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(230, 230, 209);
+  border-radius: .5rem;
+  padding: .3rem;
+  margin: .5rem .8rem 0 .8rem;
+  height: 8vh;
+}
+.icon {
+  padding: .8rem;
+  min-width: 40px;
+}
+input[type="text"] {
+  background-color: transparent;
+  flex: 1;
+  padding: 0.5rem 0.1rem 0.5rem 2.5rem;;
+  width: 90%;
+}
+.sign-out i{
+color:black;
+}
+#sideNavChat{
+  width: 25%;
+}
+#chatDisplay{
+  width: 75%;
+  background-color: #1d1d1d;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
