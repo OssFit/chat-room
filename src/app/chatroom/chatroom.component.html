@@ -1,0 +1,26 @@
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+</head>
+<div
+  id="background"
+  class="row w-full"
+  [ngClass]="{
+    'bg-white text-black': !isDarkMode,
+    'bg-gray-800 text-white': isDarkMode
+  }"
+>
+  <div class="column" id="sideNavChat">
+    <div class="searchHeader">
+      <input type="text" placeholder="Search Chat ..." />
+      <div class="options">
+        <button class="sign-out">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="column" id="chatDisplay">Current chat works</div>
+</div>

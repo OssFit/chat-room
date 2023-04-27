@@ -1,0 +1,48 @@
+#background{
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  height: 80vh;
+}
+.column{
+  float: left;
+  height: 100%;
+  color:antiquewhite
+}
+.searchHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(230, 230, 209);
+  border-radius: .5rem;
+  padding: .5rem;
+  margin: .5rem .8rem 0 .8rem;
+}
+.options{
+  display: flex;
+  align-items: center;
+}
+input[type="text"] {
+  border: none;
+  background-color: transparent;
+  flex: 1;
+  color: rgb(209, 152, 61);
+  padding: .5rem;
+  width: 90%;
+}
+button{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.sign-out i{
+color:black;
+}
+#sideNavChat{
+  width: 25%;
+  background-color: #6d6d6d;
+}
+#chatDisplay{
+  width: 75%;
+  background-color: #1d1d1d;
+}
