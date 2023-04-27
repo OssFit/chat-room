@@ -1,27 +1,37 @@
-# ChatRoom
+# Chat Room Web App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
+## Description
 
-## Development server
+You must Create a chat room app, whith an Authorization Flow, Search Capabilities, Real Time communication.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+Required Technology Stack:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular
+- NestJS/NodeJS
+- Postgres
+- Docker
+- Redis
+- OpenSearch
+- Tailwind
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Flow Specifications
 
-## Running unit tests
+### Authorization Flow
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Users should be able to login using email and password.
 
-## Running end-to-end tests
+Users should be able to sign up into the app. During the sign up they should need to provide their email, phone number, first and last name.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Users should be able to log out of the platform.
 
-## Further help
+### Search Flow
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Users should be able to search users by email, phone number first and last name. In the search result should be able to open up a chat or start a new chat.
+
+### Messaging Flow
+
+Users should be able to send messages to each other with
