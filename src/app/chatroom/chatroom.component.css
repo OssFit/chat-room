@@ -4,10 +4,6 @@
   left: 0;
   height: 80vh;
 }
-.content{
-  height: 70.7vh;
-  padding: .8rem;
-}
 .column{
   float: left;
   height: 100%;
@@ -23,9 +19,6 @@
   margin: .5rem .8rem 0 .8rem;
   height: 8vh;
 }
-.options{
-  padding-left: .5rem
-}
 .icon {
   padding: .8rem;
   min-width: 40px;
@@ -33,7 +26,6 @@
 input[type="text"] {
   background-color: transparent;
   flex: 1;
-  color: rgb(209, 152, 61);
   padding: 0.5rem 0.1rem 0.5rem 2.5rem;;
   width: 90%;
 }
@@ -42,9 +34,17 @@ color:black;
 }
 #sideNavChat{
   width: 25%;
-  background-color: #6d6d6d;
 }
 #chatDisplay{
   width: 75%;
   background-color: #1d1d1d;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
