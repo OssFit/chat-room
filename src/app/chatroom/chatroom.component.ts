@@ -7,6 +7,6 @@ import { AppComponent } from '../app.component';
   styleUrls: ['./chatroom.component.css']
 })
 export class ChatroomComponent extends AppComponent{
-  override isDarkMode: boolean = false;
+
 
 }
