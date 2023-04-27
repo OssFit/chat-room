@@ -4,6 +4,10 @@
   left: 0;
   height: 80vh;
 }
+.content{
+  height: 70.7vh;
+  padding: .8rem;
+}
 .column{
   float: left;
   height: 100%;
@@ -15,25 +19,23 @@
   justify-content: space-between;
   background-color: rgb(230, 230, 209);
   border-radius: .5rem;
-  padding: .5rem;
+  padding: .3rem;
   margin: .5rem .8rem 0 .8rem;
+  height: 8vh;
 }
 .options{
-  display: flex;
-  align-items: center;
+  padding-left: .5rem
+}
+.icon {
+  padding: .8rem;
+  min-width: 40px;
 }
 input[type="text"] {
-  border: none;
   background-color: transparent;
   flex: 1;
   color: rgb(209, 152, 61);
-  padding: .5rem;
+  padding: 0.5rem 0.1rem 0.5rem 2.5rem;;
   width: 90%;
-}
-button{
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
 }
 .sign-out i{
 color:black;
