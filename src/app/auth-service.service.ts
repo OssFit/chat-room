@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+  isAuthenticated = false;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -13,17 +14,25 @@ export class AuthService {
     this.http.post(url, data).subscribe(
       (response: any) => {
         try {
-          if (response) {
-            // La autenticación fue exitosa, redirigir al usuario a la página deseada
+          if (response ) {
+            console.log(response)
+            this.isAuthenticated = true;
             this.router.navigate([redirectUrl]);
+            localStorage.setItem('token', response.headers ? response.headers.get('x-acces-token') : null);
           } else {
             // La autenticación falló, mostrar un mensaje de error al usuario
-            console.log('Bad autentication');
+            alert('Bad autentication');
           }
         } catch (error) {
           console.log(error);
         }
       }
     );
+  }
+
+  public logout() {
+    localStorage.removeItem('token');
+    this.isAuthenticated = false;
+    this.router.navigate(['/login']);
   }
 }

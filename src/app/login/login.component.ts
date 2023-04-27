@@ -10,8 +10,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  @Input()
-  email!: string;
+  @Input() email!: string;
   @Input() password!: string;
 
   constructor(private Auth:AuthService,private router:Router){
@@ -19,7 +18,7 @@ export class LoginComponent {
   }
 
   onSubmit(){
-    this.Auth.post('https://dummyjson.com/auth/login',{username:this.email,password:this.password},"/")
+    this.Auth.post('https://dummyjson.com/auth/login',{username:this.email,password:this.password},"/chatroom")
 
   }
 
