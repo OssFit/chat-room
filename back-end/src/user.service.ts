@@ -23,12 +23,16 @@ export class UserService {
 
   async searchUsersByName(name: string) : Promise<User[]> {
     let resp =  await this.userRepository.find({
-      where: {
-        firstName: ILike(`%${name}%`) // Use ILike for case-insensitive search
-      }
+      where: [
+        { firstName: ILike(`%${name}%`) },
+        { lastName: ILike(`%${name}%`) },
+        { email: ILike(`%${name}%`) },
+        { phoneNumber: ILike(`%${name}%`) }
+      ]
     });
     return resp;
   }
+  
 
   async getUserByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { email } });
