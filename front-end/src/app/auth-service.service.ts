@@ -10,12 +10,11 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  public post(url: string, data: { username: string, password: string }, redirectUrl: string) {
+  public post(url: string, data: { email: string, password: string }, redirectUrl: string) {
     this.http.post(url, data).subscribe(
       (response: any) => {
         try {
           if (response ) {
-            console.log(response)
             this.isAuthenticated = true;
             this.router.navigate([redirectUrl]);
             localStorage.setItem('token', response.headers ? response.headers.get('x-acces-token') : null);
