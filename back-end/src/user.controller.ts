@@ -13,7 +13,7 @@ export class UserController {
   }
 
   @Get('searchid')
-  async searchUsersById(@Query('id') id: string): Promise<User[]> {
-    return this.userService.searchUsersByName(id);
+  async searchUsersById(@Query('id') id: string): Promise<User> {
+    return this.userService.getUserById(id);
   }
 }

@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './chatroom.component.html',
   styleUrls: ['./chatroom.component.css'],
 })
-export class ChatroomComponent extends AppComponent implements OnChanges {
+export class ChatroomComponent extends AppComponent {
   @Input()
   searchQuery!: string;
   myUsers: any;
@@ -24,7 +24,6 @@ export class ChatroomComponent extends AppComponent implements OnChanges {
   currentUser: any = {
     firstName: '',
     lastName: '',
-    messages: [],
   };
   usersFound: any = {
     firstName: '',
@@ -32,29 +31,24 @@ export class ChatroomComponent extends AppComponent implements OnChanges {
     id: '',
   };
   //Hardcoding test
-  currentUserId: number = 4;
+  currentUserId: number = 23;
   test: boolean = true;
   userMessages: any[] = [];
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
     super();
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    // if (changes['searchQuery'] && !changes['searchQuery'].firstChange) {
-    //   console.log(changes);
-    //   this.searchChat();
-    // }
-  }
+
   ngOnInit() {
     this.fetchCurrentUser();
-    this.fetchMessages();
   }
-  fetchMessages() {
+  fetchMessages(senderId: number, receiverId: number) {
     this.http
       .get(
-        'http://localhost:3000/messages?senderId=3&receiverId=4&page=1&pageSize=10'
+        `http://localhost:3000/messages?senderId=${senderId}&receiverId=${receiverId}&page=1&pageSize=10`
       )
       .subscribe((data) => {
         // console.log(data);
+        this.userMessages = [];
         Object.entries(data).forEach(([key, value]) => {
           this.userMessages.push(value);
           value.createdAt = new Date().toLocaleTimeString([], {
@@ -63,60 +57,31 @@ export class ChatroomComponent extends AppComponent implements OnChanges {
           });
         });
       });
+    console.log(this.userMessages)
     return this.userMessages;
   }
   searchChat(searchQuery: string) {
-    this.fetchUsers(searchQuery, (users: any) => this.userMatches = users)
-  }
-  fetchUsers(match: string, callback: Function) {
-    this.http.get(`http://localhost:3000/users/search?match=${match}`).subscribe((users) => {
-      callback(users);
-    });
+    this.http.get(`http://localhost:3000/users/search?match=${searchQuery}`).subscribe(
+      (users: any) => this.userMatches = users
+    );
   }
   fetchChat(userId: number) {
-    this.http.get(`https://dummyjson.com/users/${userId}`).subscribe((data) => {
-      console.log(data);
+    this.http.get(`http://localhost:3000/users/searchid?id=${userId}`).subscribe((data) => {
+      console.log("data:", data);
       Object.entries(data).forEach(([key, value]) => {
         key == 'firstName' ? (this.currentUser.firstName = value) : false;
         key == 'lastName' ? (this.currentUser.lastName = value) : false;
-        if (key == 'address') {
-          // this.currentUser.messages = value;
-          Object.entries(value).forEach(([key, value], index) => {
-            this.currentUser.messages.push(value);
-            // console.log(value);
-          });
-        }
       });
-      // console.log(this.currentUser);
     });
   }
   fetchChats(userId: number, userName: string, currentUserId: number) {
-    this.currentUser.messages.splice(0);
-    console.log(`User ${userId} (${userName}) has been clicked`);
     this.fetchChat(userId);
-    this.fetchChat(currentUserId);
+    this.fetchMessages(this.currentUserId, userId);
     return this.currentUser;
   }
   fetchCurrentUser() {
-    this.http.get('https://dummyjson.com/users/1').subscribe((data) => {
-      // console.log(data);
-      Object.entries(data).forEach(([key, value]) => {
-        key == 'firstName'
-          ? (this.currentUser.firstName = value)
-          : this.currentUser;
-        key == 'lastName'
-          ? (this.currentUser.lastName = value)
-          : this.currentUser;
-        if (key == 'address') {
-          // this.currentUser.messages = value;
-          Object.entries(value).forEach(([key, value], index) => {
-            this.currentUser.messages.push(value);
-            // console.log(value);
-          });
-        }
-      });
-      // console.log(this.currentUser);
-      return this.currentUser;
-    });
+    const first = 24; // Decide which is the default chat
+    this.fetchChat(first);
+    this.fetchMessages(this.currentUserId, first);
   }
 }
