@@ -11,4 +11,9 @@ export class UserController {
   async searchUsersByName(@Query('match') match: string): Promise<User[]> {
     return this.userService.searchUsersByName(match);
   }
+
+  @Get('searchid')
+  async searchUsersById(@Query('id') id: string): Promise<User[]> {
+    return this.userService.searchUsersByName(id);
+  }
 }
