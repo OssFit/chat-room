@@ -5,6 +5,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { LandingComponent } from './landing/landing.component';
 import { LayoutComponent } from './layout/layout.component';
 import { ChatroomComponent } from './chatroom/chatroom.component';
+import { AuthGuardGuard } from './auth-guard.guard';
 
 const routes: Routes = [
   {
@@ -24,7 +25,7 @@ const routes: Routes = [
         component: SignUpComponent,
       },
       { path: 'chatroom',
-        component: ChatroomComponent },
+        component: ChatroomComponent,canActivate: [AuthGuardGuard] },
     ],
   },
 ];

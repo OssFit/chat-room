@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../app.component';
+import { AuthService } from '../auth-service.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -7,25 +8,19 @@ import { AppComponent } from '../app.component';
   templateUrl:'./header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-  darkMode=false
-  constructor(){
-    this.detectColorScheme()
+export class HeaderComponent implements OnInit {
+  isLoggedIn = false;
+  isAuthenticated!: boolean;
+
+  constructor(private Auth: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.isAuthenticated = this.Auth.isAuthenticated;
   }
-detectColorScheme(){
-  if(window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches){
-    document.documentElement.setAttribute('data-theme',this.darkMode?'dark':'light')
+
+  logout() {
+    this.Auth.logout();
+    this.isLoggedIn = false;
   }
 }
 
-toggleClick(){
-  this.darkMode=!this.darkMode;
-  document.documentElement.setAttribute('data-theme',this.darkMode?'dark':'light')
-}
-
-
-
-
-
-
-}

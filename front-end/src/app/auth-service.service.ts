@@ -10,21 +10,25 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  public post(url: string, data: { username: string, password: string }, redirectUrl: string) {
+  public isAuth(): boolean{
+    const token=localStorage.getItem('token')
+    return token !== null }
+
+   public post(url: string, data: { username: string, password: string }, redirectUrl: string) {
     this.http.post(url, data).subscribe(
       (response: any) => {
         try {
-          if (response ) {
+          if (response) {
             console.log(response)
             this.isAuthenticated = true;
             this.router.navigate([redirectUrl]);
             localStorage.setItem('token', response.headers ? response.headers.get('x-acces-token') : null);
           } else {
-            // La autenticación falló, mostrar un mensaje de error al usuario
-            alert('Bad autentication');
+           this.isAuthenticated = false;
+           console.log('error')
           }
         } catch (error) {
-          console.log(error);
+          console.log('error');
         }
       }
     );
