@@ -22,12 +22,12 @@ export class AuthController {
   }
 
   @Post('signin')
-  async signIn(@Body() { email, password }): Promise<{ token: string }> {
+  async signIn(@Body() { email, password }): Promise<{ user: User, token: string }> {
     const user = await this.userService.signIn(email, password);
 
     // Generate a JWT token using the AuthService
     const token = this.authService.generateToken(user);
 
-    return { token };
+    return { user, token };
   }
 }

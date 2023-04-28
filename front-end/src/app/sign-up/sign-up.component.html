@@ -16,9 +16,9 @@
     Last Name:
     <input [ngClass]="{'invalid-input': signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched}" formControlName="lastName" placeholder=" Last Name" class=" text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10 mr-4" type="text" id="lastName" required>
   </label>
-  <label for="phoneNumber" class="w-full px-4 text-gray-700">
+  <label for="phone" class="w-full px-4 text-gray-700">
     Phone Number:
-    <input [ngClass]="{'invalid-input': signUpForm.get('phoneNumber')?.invalid && signUpForm.get('phoneNumber')?.touched}" formControlName="phoneNumber" placeholder="Phone number" class=" text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10 mr-4" type="tel" id="phoneNumber"  required>
+    <input [ngClass]="{'invalid-input': signUpForm.get('phone')?.invalid && signUpForm.get('phone')?.touched}" formControlName="phone" placeholder="Phone number" class=" text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10 mr-4" type="tel" id="phone"  required>
   </label>
 </div>
 <div class=" w-1/2">
