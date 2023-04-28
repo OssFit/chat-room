@@ -1,4 +1,10 @@
-import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  Input,
+  SimpleChanges,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { AppComponent } from '../app.component';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,7 +13,6 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './chatroom.component.html',
   styleUrls: ['./chatroom.component.css'],
 })
-
 export class ChatroomComponent extends AppComponent implements OnChanges {
   @Input()
   searchQuery!: string;
@@ -16,7 +21,6 @@ export class ChatroomComponent extends AppComponent implements OnChanges {
   matches: number[] = [];
   userMatches: any[] = [];
   match: boolean = false;
-  currentUserId: number=1;
   currentUser: any = {
     firstName: '',
     lastName: '',
@@ -27,7 +31,11 @@ export class ChatroomComponent extends AppComponent implements OnChanges {
     lastName: '',
     id: '',
   };
-  constructor(private http: HttpClient) {
+  //Hardcoding test
+  currentUserId: number = 4;
+  test: boolean = true;
+  userMessages: any[] = [];
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
     super();
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -38,6 +46,24 @@ export class ChatroomComponent extends AppComponent implements OnChanges {
   }
   ngOnInit() {
     this.fetchCurrentUser();
+    this.fetchMessages();
+  }
+  fetchMessages() {
+    this.http
+      .get(
+        'http://localhost:3000/messages?senderId=3&receiverId=4&page=1&pageSize=10'
+      )
+      .subscribe((data) => {
+        // console.log(data);
+        Object.entries(data).forEach(([key, value]) => {
+          this.userMessages.push(value);
+          value.createdAt = new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+        });
+      });
+    return this.userMessages;
   }
   searchChat(searchQuery: string) {
     this.fetchUsers(searchQuery, (users: any) => this.userMatches = users)
@@ -47,16 +73,12 @@ export class ChatroomComponent extends AppComponent implements OnChanges {
       callback(users);
     });
   }
-  fetchChat(userId: number){
+  fetchChat(userId: number) {
     this.http.get(`https://dummyjson.com/users/${userId}`).subscribe((data) => {
       console.log(data);
       Object.entries(data).forEach(([key, value]) => {
-        key == 'firstName'
-          ? (this.currentUser.firstName = value)
-          : false;
-        key == 'lastName'
-          ? (this.currentUser.lastName = value)
-          : false;
+        key == 'firstName' ? (this.currentUser.firstName = value) : false;
+        key == 'lastName' ? (this.currentUser.lastName = value) : false;
         if (key == 'address') {
           // this.currentUser.messages = value;
           Object.entries(value).forEach(([key, value], index) => {
@@ -68,12 +90,12 @@ export class ChatroomComponent extends AppComponent implements OnChanges {
       // console.log(this.currentUser);
     });
   }
-  fetchChats(userId: number, userName: string, currentUserId: number,) {
+  fetchChats(userId: number, userName: string, currentUserId: number) {
     this.currentUser.messages.splice(0);
     console.log(`User ${userId} (${userName}) has been clicked`);
     this.fetchChat(userId);
     this.fetchChat(currentUserId);
-      return this.currentUser;
+    return this.currentUser;
   }
   fetchCurrentUser() {
     this.http.get('https://dummyjson.com/users/1').subscribe((data) => {

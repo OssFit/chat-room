@@ -25,7 +25,7 @@ export class MessageService {
     const take = pageSize;
     return this.messageRepository.find({
       where: [{ senderId, receiverId }, { senderId: receiverId, receiverId: senderId }],
-      order: { createdAt: 'DESC' },
+      order: { createdAt: 'ASC' },
       skip,
       take,
     });
