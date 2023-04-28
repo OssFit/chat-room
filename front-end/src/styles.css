@@ -11,7 +11,7 @@
 
 :root{
   --bg-color:'black';
-  --text-color:'black'
+  --text-color: '#343A40'
 }
 
 [data-theme="dark"]{

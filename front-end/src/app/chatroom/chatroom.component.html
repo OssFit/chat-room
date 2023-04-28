@@ -10,55 +10,60 @@
 
 >
   <div
-    class="float-left color-white h-full text-slate-50 bg-zinc-900"
+    class="float-left color-white h-full text-slate-50 bg-white"
     id="sideNavChat"
   >
-    <div class="searchHeader">
-      <i class="fa fa-search icon absolute" style="color: black"></i>
-      <input
-        type="text"
-        placeholder="Search Chat ..."
-        class="input-field shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 placeholder:italic placeholder:text-slate-400 text-stone-950 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3"
-      />
+    <form (submit)="searchChat(searchQuery)">
+      <div class="searchHeader">
+        <i class="fa fa-search icon absolute" style="color: black"></i>
+        <input
+          type="text"
+          placeholder="Search Chat ..."
+          [(ngModel)]="searchQuery"
+          name="query"
+          class="input-field shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 placeholder:italic placeholder:text-slate-400 text-stone-950 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3"
+        />
 
-      <div class="pl-1">
-        <button
-          routerLink=""
-          class="inline-block cursor-pointer rounded px-3 pb-2 pt-1.5 font-medium uppercase leading-normal bg-red-800 text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-red-900 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-        >
-          <svg
-            class="h-5 w-5 text-white"
-            width="fit-content"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+        <div class="pl-1">
+          <button
+            type="submit"
+            class="inline-block cursor-pointer rounded px-3 pb-2 pt-1.5 font-medium uppercase leading-normal bg-cyan-700 text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-cyan-800 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
           >
-            <path stroke="none" d="M0 0h24v24H0z" />
-            <path
-              d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"
-            />
-            <path d="M7 12h14l-3 -3m0 6l3 -3" />
-          </svg>
-        </button>
+            <svg
+              class="h-8 w-8 text-teal-500"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" />
+              <path d="M15 13l4 -4l-4 -4m4 4h-11a4 4 0 0 0 0 8h1" />
+            </svg>
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="content w-full h-5/6 px-4 pt-4">
+    </form>
+    <div class="content overflow-y-auto scrollbar-hide w-full h-5/6 px-4 py-2">
       <ul
         role="list"
         class="divide-y divide-lime-200 border border-lime-200 rounded-md"
       >
-        <li class="flex justify-between gap-x-6 py-5 pl-4 cursor-pointer">
+        <li
+          *ngFor="let chatUser of userMatches; let i = index"
+          (click)="fetchChats(chatUser.id, chatUser.firstName, currentUserId)"
+          class="flex justify-between gap-x-6 py-5 pl-4 cursor-pointer"
+        >
           <div class="min-w-0 flex-auto">
-            <p class="text-2xl truncate font-semibold leading-6 text-gray-400">
-              Contact name
+            <p class="text-2xl truncate font-semibold text-gray-400">
+              {{ chatUser.firstName }}
             </p>
             <!-- <p class="mt-1 truncate text-ls leading-5 text-neutral-300">
-              Contacts last message
-            </p> -->
+            Contacts last message
+          </p> -->
           </div>
         </li>
       </ul>
@@ -68,93 +73,41 @@
     class="h-full float-left color-white text-slate-50 w-full"
     id="chatDisplay"
   >
-    <div class="h-1/6 bg-stone-950 text-stone-400 text-xl flex align-bottom">
-      <div class="my-auto ml-2">Contact name</div>
-    </div>
+    <nav class="w-full h-10 bg-gray-900 rounded-tr rounded-tl flex justify-between items-center">
+				
+      <div class="flex justify-center items-center">
+        <i class="mdi mdi-arrow-left font-normal text-gray-300 ml-1"></i>
+        <img src="https://i.imgur.com/IAgGUYF.jpg" class="rounded-full ml-1" width="25" height="25">
+        <span class="text-xs font-medium text-gray-300 ml-1">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+      </div>
+      <div class="flex items-center">
+        <i class="mdi mdi-video text-gray-300 mr-4"></i>
+        <i class="mdi mdi-phone text-gray-300 mr-2"></i>
+        <i class="mdi mdi-dots-vertical text-gray-300 mr-2"></i> 
+      </div>
+    
+  </nav>
     <div class="h-4/6 overflow-y-auto scrollbar-hide">
       <div class="content w-full">
         <ul role="list" class="divide-y divide-gray-200 w-1/2 h-full">
-          <li class="w-full py-3 pl-4">
-            <div class="min-w-0">
-              <p class="text-base truncate font-semibold leading-6 text-gray-400">
-                Contact name
-              </p>
-              <p class="mt-1 truncate text-2xl text-neutral-300">
-                Contacts message
-              </p>
-            </div>
-          </li>
-          <li class="w-full py-3 pl-4">
-            <div class="min-w-0">
-              <p class="text-base truncate font-semibold leading-6 text-gray-400">
-                Contact name
-              </p>
-              <p class="mt-1 truncate text-2xl text-neutral-300">
-                Contacts message
-              </p>
-            </div>
-          </li>
-          <li class="w-full py-3 pl-4">
-            <div class="min-w-0">
-              <p class="text-base truncate font-semibold leading-6 text-gray-400">
-                Contact name
-              </p>
-              <p class="mt-1 truncate text-2xl text-neutral-300">
-                Contacts message
-              </p>
-            </div>
-          </li>
-          <li class="w-full py-3 pl-4">
-            <div class="min-w-0">
-              <p class="text-base truncate font-semibold leading-6 text-gray-400">
-                Contact name
-              </p>
-              <p class="mt-1 truncate text-2xl text-neutral-300">
-                Contacts message
-              </p>
-            </div>
-          </li>
-          <li class="w-full py-3 pl-4">
-            <div class="min-w-0">
-              <p class="text-base truncate font-semibold leading-6 text-gray-400">
-                Contact name
-              </p>
-              <p class="mt-1 truncate text-2xl text-neutral-300">
-                Contacts message
-              </p>
-            </div>
-          </li>
-          <li class="w-full py-3 pl-4">
-            <div class="min-w-0">
-              <p class="text-base truncate font-semibold leading-6 text-gray-400">
-                Contact name
-              </p>
-              <p class="mt-1 truncate text-2xl text-neutral-300">
-                Contacts message
-              </p>
-            </div>
-          </li>
-          <li class="w-full py-3 pl-4">
-            <div class="min-w-0">
-              <p class="text-base truncate font-semibold leading-6 text-gray-400">
-                Contact name
-              </p>
-              <p class="mt-1 truncate text-2xl text-neutral-300">
-                Contacts message
-              </p>
-            </div>
-          </li>
-          <li class="w-full py-3 pl-4">
-            <div class="min-w-0">
-              <p class="text-base truncate font-semibold leading-6 text-gray-400">
-                Contact name
-              </p>
-              <p class="mt-1 truncate text-2xl text-neutral-300">
-                Contacts message
-              </p>
-            </div>
+          <li
+            *ngFor="let message of currentUser.messages; let i = index"
+            class="w-full py-3 pl-4"
+          >
+
+          <div class="flex items-center pr-10">
+            <img src="https://i.imgur.com/IAgGUYF.jpg" class="rounded-full shadow-xl" width="15" height="15">
+            <span class="flex ml-1  h-auto bg-gray-900 text-gray-200 text-xs font-normal rounded-sm px-1 p-1 items-end" style="font-size: 10px;">{{ currentUser.messages[i] }} 
+              <span class="text-gray-400 pl-1" style="font-size: 8px;">{{ currentUser.messages[i].createdAt }}</span></span>
+            
+          </div>
+            
           </li>
         </ul>
+        <div class="flex justify-end pt-2 pl-10">
+					<span class="bg-green-900 h-auto text-gray-200 text-xs font-normal p-1 rounded-sm px-1 items-end flex justify-end " style="font-size: 10px;">Twice a day, at breakfast and before bed <span class="text-gray-400 pl-1" style="font-size: 8px;">02.30am</span></span>
+
+				</div>
       </div>
     </div>
     <div class="h-1/6 w-full flex items-center">
@@ -167,9 +120,8 @@
 
       <div class="send">
         <button
-          routerLink=""
           type="submit"
-          class="inline-block cursor-pointer rounded p-2 font-medium uppercase leading-normal bg-orange-400 text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-orange-500 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+          class="inline-block cursor-pointer  rounded-full p-2 font-medium uppercase leading-normal bg-blue-300 text-white "
         >
           <svg
             class="h-8 w-8 text-black"

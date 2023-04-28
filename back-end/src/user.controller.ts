@@ -8,7 +8,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('search')
-  async searchUsersByName(@Query('name') name: string): Promise<User[]> {
-    return this.userService.searchUsersByName(name);
+  async searchUsersByName(@Query('match') match: string): Promise<User[]> {
+    return this.userService.searchUsersByName(match);
   }
 }

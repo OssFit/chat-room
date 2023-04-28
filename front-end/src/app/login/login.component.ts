@@ -17,8 +17,7 @@ export class LoginComponent {
   }
 
   onSubmit(){
-    this.Auth.post('https://dummyjson.com/auth/login',{username:this.email,password:this.password},"/chatroom")
-
+    this.Auth.post('http://localhost:3000/auth/signin',{email :this.email, password: this.password},"/chatroom")
   }
 
 }
