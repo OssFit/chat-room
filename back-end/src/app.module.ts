@@ -11,25 +11,25 @@ import { Message } from './message.entity';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-imports: [
-TypeOrmModule.forRoot({
-// Database connection configuration
-type: 'postgres',
-host: process.env.DATABASE_HOST || 'localhost',
-port: parseInt(process.env.DATABASE_PORT, 10) || 5442,
-username: process.env.DATABASE_USERNAME || 'username',
-password: process.env.DATABASE_PASSWORD || 'password',
-database: process.env.DATABASE_NAME || 'mydb',
-entities: [User, Message],
-synchronize: true,
-}),
-JwtModule.register({
-secret: process.env.JWT_SECRET,
-signOptions: { expiresIn: '1h' },
-}),
-TypeOrmModule.forFeature([User, Message]) // add Message to the imports array
-],
-controllers: [AuthController, UserController, MessageController],
-providers: [AuthService, UserService, MessageService],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5442,
+      username: 'username',
+      password: 'password',
+      database: 'mydb',
+      entities: [User, Message],
+      synchronize: true,
+    }),
+    JwtModule.register({
+      secret: "mysupersecret",
+      signOptions: { expiresIn: '1h' },
+    }),
+    TypeOrmModule.forFeature([User, Message]),
+  ],
+  controllers: [AuthController, UserController, MessageController],
+  providers: [AuthService, UserService, MessageService],
 })
 export class AppModule {}
+
