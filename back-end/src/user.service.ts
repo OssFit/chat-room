@@ -22,10 +22,12 @@ export class UserService {
   }
 
   async searchUsersByName(name: string) : Promise<User[]> {
-    return this.userRepository.find({
+    let resp =  await this.userRepository.find({
       where: {
         firstName: ILike(`%${name}%`) // Use ILike for case-insensitive search
       }
-    })
+    });
+    console.log("response ", name, " ", resp);
+    return resp;
   }
 }

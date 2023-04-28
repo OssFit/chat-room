@@ -11,10 +11,10 @@ export class MessageService {
   ) {}
 
   async sendMessage(message: Message): Promise<Message> {
-    // TODO: validate message data and set createdAt
+    message.createdAt = new Date(); // set createdAt to the current date
     return this.messageRepository.save(message);
   }
-
+  
   async listMessages(
     senderId: number,
     receiverId: number,
