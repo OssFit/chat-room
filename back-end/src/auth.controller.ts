@@ -3,6 +3,7 @@ import { User } from './user.entity';
 import { MessageService } from './message.service';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
+import { ConflictException } from './conflict.exception';
 
 @Controller('auth')
 export class AuthController {
@@ -13,6 +14,10 @@ export class AuthController {
 
   @Post('signup')
   async signUp(@Body() user: User): Promise<User> {
+    const existingUser = await this.userService.getUserByEmail(user.email);
+    if (existingUser) {
+      throw new ConflictException('User with this email already exists');
+    }
     return this.userService.signUp(user);
   }
 

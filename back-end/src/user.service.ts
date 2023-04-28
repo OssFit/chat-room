@@ -27,7 +27,12 @@ export class UserService {
         firstName: ILike(`%${name}%`) // Use ILike for case-insensitive search
       }
     });
-    console.log("response ", name, " ", resp);
     return resp;
   }
+
+  async getUserByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    return user;
+  }
+  
 }
