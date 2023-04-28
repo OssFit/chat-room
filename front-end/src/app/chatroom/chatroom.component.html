@@ -10,7 +10,7 @@
 
 >
   <div
-    class="float-left color-white h-full text-slate-50 bg-zinc-900"
+    class="float-left color-white h-full text-slate-50 bg-white"
     id="sideNavChat"
   >
     <form (submit)="searchChat(searchQuery)">
@@ -73,11 +73,20 @@
     class="h-full float-left color-white text-slate-50 w-full"
     id="chatDisplay"
   >
-    <div class="h-1/6 bg-stone-950 text-stone-400 text-xl flex align-bottom">
-      <div class="my-auto text-4xl ml-2">
-        {{ currentUser.firstName }} {{ currentUser.lastName }}
+    <nav class="w-full h-10 bg-gray-900 rounded-tr rounded-tl flex justify-between items-center">
+				
+      <div class="flex justify-center items-center">
+        <i class="mdi mdi-arrow-left font-normal text-gray-300 ml-1"></i>
+        <img src="https://i.imgur.com/IAgGUYF.jpg" class="rounded-full ml-1" width="25" height="25">
+        <span class="text-xs font-medium text-gray-300 ml-1">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
       </div>
-    </div>
+      <div class="flex items-center">
+        <i class="mdi mdi-video text-gray-300 mr-4"></i>
+        <i class="mdi mdi-phone text-gray-300 mr-2"></i>
+        <i class="mdi mdi-dots-vertical text-gray-300 mr-2"></i> 
+      </div>
+    
+  </nav>
     <div class="h-4/6 overflow-y-auto scrollbar-hide">
       <div class="content w-full">
         <ul role="list" class="divide-y divide-gray-200 w-1/2 h-full">
@@ -85,14 +94,14 @@
             *ngFor="let message of currentUser.messages; let i = index"
             class="w-full py-3 pl-4"
           >
-            <div class="min-w-0">
-              <p class="text-base truncate font-semibold text-gray-400">
-                {{ currentUser.firstName }}
-              </p>
-              <p class="mt-1 truncate text-2xl text-neutral-300">
-                {{ currentUser.messages[i] }}
-              </p>
-            </div>
+
+          <div class="flex items-center pr-10">
+            <img src="https://i.imgur.com/IAgGUYF.jpg" class="rounded-full shadow-xl" width="15" height="15" style="box-shadow: ">
+            <span class="flex ml-1  h-auto bg-gray-900 text-gray-200 text-xs font-normal rounded-sm px-1 p-1 items-end" style="font-size: 10px;">{{ currentUser.messages[i].content }} 
+              <span class="text-gray-400 pl-1" style="font-size: 8px;">{{ currentUser.messages[i].createdAt }}</span></span>
+            
+          </div>
+            
           </li>
         </ul>
       </div>
@@ -108,7 +117,7 @@
       <div class="send">
         <button
           type="submit"
-          class="inline-block cursor-pointer rounded p-2 font-medium uppercase leading-normal bg-orange-400 text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-orange-500 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+          class="inline-block cursor-pointer  rounded-full p-2 font-medium uppercase leading-normal bg-blue-300 text-white "
         >
           <svg
             class="h-8 w-8 text-black"
