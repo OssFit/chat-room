@@ -16,22 +16,19 @@ import { HttpClient } from '@angular/common/http';
 export class ChatroomComponent extends AppComponent {
   @Input()
   searchQuery!: string;
+  newMessage!: string;
   myUsers: any;
   tempUser: any;
   matches: number[] = [];
   userMatches: any[] = [];
   match: boolean = false;
   currentUser: any = {
+    id: 0,
     firstName: '',
     lastName: '',
-  };
-  usersFound: any = {
-    firstName: '',
-    lastName: '',
-    id: '',
   };
   //Hardcoding test
-  currentUserId: number = 23;
+  myId: number = 23;
   test: boolean = true;
   userMessages: any[] = [];
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
@@ -47,7 +44,6 @@ export class ChatroomComponent extends AppComponent {
         `http://localhost:3000/messages?senderId=${senderId}&receiverId=${receiverId}&page=1&pageSize=10`
       )
       .subscribe((data) => {
-        // console.log(data);
         this.userMessages = [];
         Object.entries(data).forEach(([key, value]) => {
           this.userMessages.push(value);
@@ -57,7 +53,6 @@ export class ChatroomComponent extends AppComponent {
           });
         });
       });
-    console.log(this.userMessages)
     return this.userMessages;
   }
   searchChat(searchQuery: string) {
@@ -67,21 +62,30 @@ export class ChatroomComponent extends AppComponent {
   }
   fetchChat(userId: number) {
     this.http.get(`http://localhost:3000/users/searchid?id=${userId}`).subscribe((data) => {
-      console.log("data:", data);
       Object.entries(data).forEach(([key, value]) => {
+        key == 'id' ? (this.currentUser.id = value) : false;
         key == 'firstName' ? (this.currentUser.firstName = value) : false;
         key == 'lastName' ? (this.currentUser.lastName = value) : false;
       });
     });
   }
-  fetchChats(userId: number, userName: string, currentUserId: number) {
+  fetchChats(userId: number, userName: string) {
     this.fetchChat(userId);
-    this.fetchMessages(this.currentUserId, userId);
+    this.fetchMessages(this.myId, userId);
     return this.currentUser;
   }
   fetchCurrentUser() {
     const first = 24; // Decide which is the default chat
     this.fetchChat(first);
-    this.fetchMessages(this.currentUserId, first);
+    this.fetchMessages(this.myId, first);
+  }
+  sendMessage() {
+    const body = {senderId: this.myId, receiverId: this.currentUser.id, content: this.newMessage}
+    this.newMessage = '';
+    this.http.post('http://localhost:3000/messages', body).subscribe((response) => {
+      if (response) {
+        this.fetchMessages(this.myId, this.currentUser.id);
+      }
+    });
   }
 }
