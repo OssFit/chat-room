@@ -90,10 +90,11 @@
         <i class="mdi mdi-dots-vertical text-gray-300 mr-2"></i>
       </div>
     </nav>
-    <div class="h-4/6 overflow-y-auto scrollbar-hide">
+    <div #messagesList class="h-4/6 overflow-y-auto scrollbar-hide">
       <div class="content w-full">
         <ul role="list" class="divide-y divide-gray-200 w-full h-full">
           <li
+            #messages
             *ngFor="let message of userMessages; let i = index"
             class="w-full py-3 pl-4"
           >
