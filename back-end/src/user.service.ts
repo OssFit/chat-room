@@ -21,13 +21,13 @@ export class UserService {
     return user;
   }
 
-  async searchUsersByName(name: string) : Promise<User[]> {
+  async searchUsersByName(match: string) : Promise<User[]> {
     let resp =  await this.userRepository.find({
       where: [
-        { firstName: ILike(`%${name}%`) },
-        { lastName: ILike(`%${name}%`) },
-        { email: ILike(`%${name}%`) },
-        { phoneNumber: ILike(`%${name}%`) }
+        { firstName: ILike(`%${match}%`) },
+        { lastName: ILike(`%${match}%`) },
+        { email: ILike(`%${match}%`) },
+        { phoneNumber: ILike(`%${match}%`) }
       ]
     });
     return resp;
