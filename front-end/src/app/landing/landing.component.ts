@@ -11,7 +11,7 @@ export class LandingComponent extends AppComponent implements OnInit{
   public image!:string;
 
   ngOnInit(): void {
-    this.image='http://vidatech.pe/wp-content/uploads/2020/09/redes-sociales-2-1.png';
+    this.image='assets/redes-sociales.png';
 
 
   }
