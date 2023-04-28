@@ -24,7 +24,7 @@ export class AuthController {
   @Post('signin')
   async signIn(@Body() { email, password }): Promise<{ user: User, token: string }> {
     const user = await this.userService.signIn(email, password);
-
+    user.password = "nonono!";
     // Generate a JWT token using the AuthService
     const token = this.authService.generateToken(user);
 
