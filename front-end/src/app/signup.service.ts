@@ -10,8 +10,8 @@ export class SignUpService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  public post(url: string, data: FormGroup, redirectUrl: string) {
-    this.http.post(url, data).subscribe(
+  public post(url: string, formGroup: FormGroup, redirectUrl: string) {
+    this.http.post(url, formGroup.value).subscribe(
       (response: any) => {
         try {
           if (response) {

@@ -15,7 +15,6 @@ export class AuthService {
       (response: any) => {
         try {
           if (response ) {
-            console.log(response)
             this.isAuthenticated = true;
             this.router.navigate([redirectUrl]);
             localStorage.setItem('token', response.headers ? response.headers.get('x-acces-token') : null);

@@ -13,7 +13,7 @@ export class SignUpComponent {
   signUpForm = new FormGroup({
     firstName: new FormControl('',Validators.required),
     lastName: new FormControl('',Validators.required),
-    phone:new FormControl('',Validators.required),
+    phoneNumber: new FormControl('',Validators.required),
     email: new FormControl('',[Validators.required,Validators.email]),
     password: new FormControl('',[Validators.required,Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/
     )]),
@@ -28,9 +28,7 @@ export class SignUpComponent {
   }
 
   onSubmit(){
-    // this.SignUp.post('https://dummyjson.com/auth/login',this.signUpForm,"/chatroom")
-    console.warn(this.signUpForm.value);
-
+    this.SignUp.post('http://localhost:3000/auth/signup',this.signUpForm,"/chatroom")
   }
 
 }
