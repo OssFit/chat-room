@@ -80,6 +80,7 @@ export class ChatroomComponent extends AppComponent {
     this.fetchMessages(this.myId, first);
   }
   sendMessage() {
+    if (!this.newMessage) return;
     const body = {senderId: this.myId, receiverId: this.currentUser.id, content: this.newMessage}
     this.newMessage = '';
     this.http.post('http://localhost:3000/messages', body).subscribe((response) => {
