@@ -50,7 +50,7 @@
       >
         <li
           *ngFor="let chatUser of userMatches; let i = index"
-          (click)="fetchChats(chatUser.id, chatUser.firstName)"
+          (click)="fetchChats(chatUser.id)"
           class="flex justify-between gap-x-6 py-5 pl-4 cursor-pointer bg-green-100"
         >
           <div class="min-w-0 flex-auto">

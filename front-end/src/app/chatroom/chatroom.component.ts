@@ -43,24 +43,19 @@ export class ChatroomComponent extends AppComponent {
   socket: any;
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
-    super();
-    console.log(localStorage.getItem('user'));
-    
+    super();    
     this.socket = io('http://localhost:3000');
   }
 
   ngOnInit() {
     this.fetchCurrentUser();
-    this.socket.on('newMessage', (message: any) => {
-      // add the new message to the userMessages array
-      message.createdAt = new Date().toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-      this.userMessages.push(message);
-      // detect changes manually since the update is happening outside of Angular
-      this.cdr.detectChanges();
-    });
+    this.socket.on("newLiveMessage", (message: any) => {
+        message.createdAt = new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+        this.userMessages.push(message)
+    })
   }
   ngAfterViewInit() {
     // Scroll to bottom of chat
@@ -77,13 +72,8 @@ export class ChatroomComponent extends AppComponent {
         this.userMessages = [];
         Object.entries(data).forEach(([key, value]) => {
           this.userMessages.push(value);
-
           value.createdAt=this.userMessages.map((e)=>new Date(e.createdAt).toLocaleTimeString('es-ES', { hour12: false,hour:'2-digit',minute:'2-digit' }))
           value.createdAt=value.createdAt.pop()
-          // value.createdAt = new Date().toLocaleTimeString([], {
-          //   hour: '2-digit',
-          //   minute: '2-digit',
-          // });
         });
       });
     return this.userMessages;
@@ -93,6 +83,10 @@ export class ChatroomComponent extends AppComponent {
     this.http.get(`http://localhost:3000/users/search?match=${searchQuery}`).subscribe(
       (users: any) => this.userMatches = users
     );
+  }
+
+  emitLiveMessages(userId: number) {
+    this.socket.emit("registerClient", {senderId: this.myId, receiverId: userId});
   }
 
   fetchChat(userId: number) {
@@ -105,16 +99,17 @@ export class ChatroomComponent extends AppComponent {
     });
   }
 
-  fetchChats(userId: number, userName: string) {
+  fetchChats(userId: number) {
+    this.emitLiveMessages(userId);
     this.fetchChat(userId);
     this.fetchMessages(this.myId, userId);
     this.sendDisabled = false;
-    console.log(this.sendDisabled);
     return this.currentUser;
   }
 
   fetchCurrentUser() {
-    const first = 24; // Decide which is the default chat
+    const first = 27; // Decide which is the default chat
+    this.emitLiveMessages(first);
     this.fetchChat(first);
     this.fetchMessages(this.myId, first);
   }
@@ -130,7 +125,7 @@ export class ChatroomComponent extends AppComponent {
           minute: '2-digit',
         });
         this.userMessages.push(data)
-      }    });
+      }});
   }
 
 }
