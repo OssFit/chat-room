@@ -39,8 +39,9 @@ export class ChatroomComponent extends AppComponent {
   myId: number = 23;
   test: boolean = true;
   userMessages: any[] = [];
+  sendDisabled: boolean = true;
   socket: any;
-  
+
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
     super();
     this.socket = io('http://localhost:3000');
@@ -64,11 +65,11 @@ export class ChatroomComponent extends AppComponent {
     this.messagesElem.changes.subscribe(() =>
       this.messagesList.nativeElement.scrollTop = this.messagesList.nativeElement.scrollHeight
     );
-  } 
+  }
   fetchMessages(senderId: number, receiverId: number) {
     this.http
       .get(
-        `http://localhost:3000/messages?senderId=${senderId}&receiverId=${receiverId}&page=1&pageSize=10`
+        `http://localhost:3000/messages?senderId=${senderId}&receiverId=${receiverId}&page=1&pageSize=1000`
       )
       .subscribe((data) => {
         this.userMessages = [];
@@ -102,6 +103,8 @@ export class ChatroomComponent extends AppComponent {
   fetchChats(userId: number, userName: string) {
     this.fetchChat(userId);
     this.fetchMessages(this.myId, userId);
+    this.sendDisabled = false;
+    console.log(this.sendDisabled);
     return this.currentUser;
   }
 
