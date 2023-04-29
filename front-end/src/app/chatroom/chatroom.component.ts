@@ -104,6 +104,7 @@ export class ChatroomComponent extends AppComponent {
     this.fetchChat(userId);
     this.fetchMessages(this.myId, userId);
     this.sendDisabled = false;
+    console.log(this.sendDisabled);
     return this.currentUser;
   }
 
@@ -127,5 +128,4 @@ export class ChatroomComponent extends AppComponent {
         this.userMessages.push(data)
       }});
   }
-
 }

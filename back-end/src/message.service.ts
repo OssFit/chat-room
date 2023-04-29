@@ -47,7 +47,7 @@ export class MessageService {
 
   // remove a client from the clients array
   removeClient(socket: any) {
-    console.log(this.sockets[socket]);
+    if (!socket) return;
     const [senderId, receiverId] = this.sockets[socket];
     delete this.sockets[socket];
     delete this.clients[receiverId][senderId];
