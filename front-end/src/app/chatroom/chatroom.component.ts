@@ -80,7 +80,7 @@ export class ChatroomComponent extends AppComponent {
   }
 
   searchChat(searchQuery: string) {
-    this.http.get(`http://localhost:3000/users/search?match=${searchQuery}`).subscribe(
+    this.http.get(`http://localhost:3000/users/search?match=${searchQuery}&id=${this.myId}`).subscribe(
       (users: any) => this.userMatches = users
     );
   }

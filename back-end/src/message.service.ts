@@ -54,6 +54,8 @@ export class MessageService {
   }
 
   sendLiveMessage(message: Message){
+    if (!(message.senderId in this.clients)) return;
+    if (!(message.receiverId in this.clients[message.senderId])) return
     const socket = this.clients[message.senderId][message.receiverId];
     socket.emit("newLiveMessage", message);
   }
