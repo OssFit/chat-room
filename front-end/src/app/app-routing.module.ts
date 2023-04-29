@@ -14,18 +14,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: LandingComponent,
+        component: LandingComponent, canActivate: [AuthGuardGuard]
       },
       {
         path: 'login',
-        component: LoginComponent,
+        component: LoginComponent, canActivate: [AuthGuardGuard]
       },
       {
         path: 'sign-up',
-        component: SignUpComponent,
+        component: SignUpComponent, canActivate: [AuthGuardGuard]
       },
       { path: 'chatroom',
-        component: ChatroomComponent,canActivate: [AuthGuardGuard] },
+        component: ChatroomComponent, canActivate: [AuthGuardGuard]
+      },
     ],
   },
 ];

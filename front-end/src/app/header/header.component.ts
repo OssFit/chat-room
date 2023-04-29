@@ -8,19 +8,17 @@ import { Router } from '@angular/router';
   templateUrl:'./header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   isLoggedIn = false;
-  isAuthenticated!: boolean;
 
   constructor(private Auth: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    this.isAuthenticated = this.Auth.isAuthenticated;
-  }
-
   logout() {
     this.Auth.logout();
-    this.isLoggedIn = false;
+  }
+
+  isAuthenticated(){
+    return this.Auth.isAuth();
   }
 }
 

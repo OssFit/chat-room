@@ -15,10 +15,15 @@ export class AuthGuardGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isAuthenticated=this.authService.isAuth();
-    if(isAuthenticated){
-      return true
-   }
-    return this.router.navigate(['/login'])
+    if (route.url[0]?.path === 'chatroom'){
+      if (isAuthenticated) {
+        return true;
+      }
+      return this.router.navigate(['/']);
+    }
+    if (isAuthenticated) {
+      return this.router.navigate(['/chatroom']);
+    }
+    return true;
   }
-
 }
