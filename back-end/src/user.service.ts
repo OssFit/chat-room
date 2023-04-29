@@ -33,15 +33,23 @@ export class UserService {
       { phoneNumber: ILike(`%${match}%`) }
     ];
   
-    if (id) {
-      where.push({ id: Not(id) });
+    if (userId) {
+      where.push({ id: Not(userId) });
     }
   
     const resp = await this.userRepository.find({
       where,
     });
-  
-    return resp;
+    
+    let cleanResult = []
+    for(let i=0; i<resp.length; i++){
+      if(resp[i].id === userId){
+
+      }else{
+        cleanResult.push(resp[i]);
+      }
+    }
+    return cleanResult;
   }
   
   
