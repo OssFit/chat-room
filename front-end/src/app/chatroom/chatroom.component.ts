@@ -36,7 +36,7 @@ export class ChatroomComponent extends AppComponent {
     lastName: '',
   };
   //Hardcoding test
-  myId: number = 23;
+  myId: number = JSON.parse(localStorage.getItem('user')!).id;
   test: boolean = true;
   userMessages: any[] = [];
   sendDisabled: boolean = true;
@@ -44,6 +44,8 @@ export class ChatroomComponent extends AppComponent {
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
     super();
+    console.log(localStorage.getItem('user'));
+    
     this.socket = io('http://localhost:3000');
   }
 

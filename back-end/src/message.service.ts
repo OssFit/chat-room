@@ -51,6 +51,7 @@ export class MessageService {
 
   // broadcast a new message to all connected clients
   broadcastMessage(message: Message) {
+    console.log("message", Message)
     this.clients.forEach(client => {
       client.emit('newMessage', message);
     });
