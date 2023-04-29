@@ -7,7 +7,7 @@ import { catchError, of } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  isAuthenticated = false;
+  isAuthenticated = false ;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -46,7 +46,7 @@ export class AuthService {
 
   public logout() {
     localStorage.removeItem('token')
-    localStorage.removeItem('id')
+    localStorage.removeItem('user')
     this.isAuthenticated = false;
     this.router.navigate(['/login']);
   }
