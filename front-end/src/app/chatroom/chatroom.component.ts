@@ -71,10 +71,13 @@ export class ChatroomComponent extends AppComponent {
         this.userMessages = [];
         Object.entries(data).forEach(([key, value]) => {
           this.userMessages.push(value);
-          value.createdAt = new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          });
+
+          value.createdAt=this.userMessages.map((e)=>new Date(e.createdAt).toLocaleTimeString('es-ES', { hour12: false,hour:'2-digit',minute:'2-digit' }))
+          value.createdAt=value.createdAt.pop()
+          // value.createdAt = new Date().toLocaleTimeString([], {
+          //   hour: '2-digit',
+          //   minute: '2-digit',
+          // });
         });
       });
     return this.userMessages;
@@ -123,16 +126,15 @@ export class ChatroomComponent extends AppComponent {
       content: this.newMessage,
     };
     this.newMessage = '';
-    this.http
-      .post('http://localhost:3000/messages', body)
-      .subscribe((data: any) => {
-        if (data) {
-          data.createdAt = new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          });
-          this.userMessages.push(data);
-        }
-      });
+    this.http.post('http://localhost:3000/messages', body).subscribe((data: any) => {
+      if (data) {
+        data.createdAt = new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+        this.userMessages.push(data)
+      }
+    });
   }
+
 }

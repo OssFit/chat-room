@@ -5,13 +5,14 @@ import { IoAdapter } from '@nestjs/platform-socket.io';
 
 @WebSocketGateway({ namespace: '/chat', cors: true })
 export class WebsocketGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-  constructor(private messageService: MessageService) {}
-
+  constructor() {}
+  private messageService: MessageService
   @WebSocketServer()
   server: Server;
 
   async handleConnection(socket: any) {
     // add new client to the clients array
+    console.log("socket", socket)
     this.messageService.addClient(socket);
 
     // send list of previous messages to the client
