@@ -6,9 +6,13 @@ import {
   ViewChildren,
   ElementRef,
   QueryList,
+  OnChanges,
+  SimpleChanges
 } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { HttpClient } from '@angular/common/http';
+import io from 'socket.io-client';
+
 
 @Component({
   selector: 'app-chatroom',
@@ -31,30 +35,36 @@ export class ChatroomComponent extends AppComponent {
     firstName: '',
     lastName: '',
   };
-  userString!: string;
   //Hardcoding test
   myId: number = 23;
   test: boolean = true;
   userMessages: any[] = [];
+  socket: any;
+  
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
     super();
+    this.socket = io('http://localhost:3000');
   }
 
   ngOnInit() {
-    // this.fetchCurrentUser();
-    this.userString = '' + localStorage.getItem('user');
-    this.currentUser.id = JSON.parse(this.userString).id;
-    this.currentUser.firstName = JSON.parse(this.userString).firstName;
-    this.currentUser.lastName = JSON.parse(this.userString).lastName;
+    this.fetchCurrentUser();
+    this.socket.on('newMessage', (message: any) => {
+      // add the new message to the userMessages array
+      message.createdAt = new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      this.userMessages.push(message);
+      // detect changes manually since the update is happening outside of Angular
+      this.cdr.detectChanges();
+    });
   }
   ngAfterViewInit() {
     // Scroll to bottom of chat
-    this.messagesElem.changes.subscribe(
-      () =>
-        (this.messagesList.nativeElement.scrollTop =
-          this.messagesList.nativeElement.scrollHeight)
+    this.messagesElem.changes.subscribe(() =>
+      this.messagesList.nativeElement.scrollTop = this.messagesList.nativeElement.scrollHeight
     );
-  }
+  } 
   fetchMessages(senderId: number, receiverId: number) {
     this.http
       .get(
@@ -72,55 +82,47 @@ export class ChatroomComponent extends AppComponent {
       });
     return this.userMessages;
   }
+
   searchChat(searchQuery: string) {
-    this.http
-      .get(`http://localhost:3000/users/search?match=${searchQuery}`)
-      .subscribe((users: any) => {
-        this.userMatches = users;
-        this.userMatches = this.userMatches.filter(
-          (obj) => obj.id !== this.currentUser.id
-        );
-      });
+    this.http.get(`http://localhost:3000/users/search?match=${searchQuery}`).subscribe(
+      (users: any) => this.userMatches = users
+    );
   }
+
   fetchChat(userId: number) {
-    this.http
-      .get(`http://localhost:3000/users/searchid?id=${userId}`)
-      .subscribe((data) => {
-        Object.entries(data).forEach(([key, value]) => {
-          key == 'id' ? (this.currentUser.id = value) : false;
-          key == 'firstName' ? (this.currentUser.firstName = value) : false;
-          key == 'lastName' ? (this.currentUser.lastName = value) : false;
-        });
+    this.http.get(`http://localhost:3000/users/searchid?id=${userId}`).subscribe((data) => {
+      Object.entries(data).forEach(([key, value]) => {
+        key == 'id' ? (this.currentUser.id = value) : false;
+        key == 'firstName' ? (this.currentUser.firstName = value) : false;
+        key == 'lastName' ? (this.currentUser.lastName = value) : false;
       });
+    });
   }
+
   fetchChats(userId: number, userName: string) {
     this.fetchChat(userId);
     this.fetchMessages(this.myId, userId);
     return this.currentUser;
   }
+
   fetchCurrentUser() {
     const first = 24; // Decide which is the default chat
     this.fetchChat(first);
     this.fetchMessages(this.myId, first);
   }
+
   sendMessage() {
     if (!this.newMessage) return;
-    const body = {
-      senderId: this.myId,
-      receiverId: this.currentUser.id,
-      content: this.newMessage,
-    };
+    const body = {senderId: this.myId, receiverId: this.currentUser.id, content: this.newMessage}
     this.newMessage = '';
-    this.http
-      .post('http://localhost:3000/messages', body)
-      .subscribe((data: any) => {
-        if (data) {
-          data.createdAt = new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          });
-          this.userMessages.push(data);
-        }
-      });
+    this.http.post('http://localhost:3000/messages', body).subscribe((data: any) => {
+      if (data) {
+        data.createdAt = new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+        this.userMessages.push(data)
+      }
+    });
   }
 }
