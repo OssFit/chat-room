@@ -3,7 +3,7 @@ import { Server } from 'socket.io';
 import { MessageService } from './message.service';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 
-@WebSocketGateway({ namespace: '/chat' })
+@WebSocketGateway({ namespace: '/chat', cors: true })
 export class WebsocketGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   constructor(private messageService: MessageService) {}
 

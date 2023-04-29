@@ -12,7 +12,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { WebsocketGateway } from './websocket.gateway';
 import { io } from 'socket.io-client';
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({
