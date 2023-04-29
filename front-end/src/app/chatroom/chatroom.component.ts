@@ -5,10 +5,14 @@ import {
   ViewChild,
   ViewChildren,
   ElementRef,
-  QueryList
+  QueryList,
+  OnChanges,
+  SimpleChanges
 } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { HttpClient } from '@angular/common/http';
+import io from 'socket.io-client';
+
 
 @Component({
   selector: 'app-chatroom',
@@ -32,15 +36,31 @@ export class ChatroomComponent extends AppComponent {
     lastName: '',
   };
   //Hardcoding test
-  myId: number = 23;
+  myId: number = JSON.parse(localStorage.getItem('user')!).id;
   test: boolean = true;
   userMessages: any[] = [];
+  sendDisabled: boolean = true;
+  socket: any;
+
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
     super();
+    console.log(localStorage.getItem('user'));
+    
+    this.socket = io('http://localhost:3000');
   }
 
   ngOnInit() {
     this.fetchCurrentUser();
+    this.socket.on('newMessage', (message: any) => {
+      // add the new message to the userMessages array
+      message.createdAt = new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      this.userMessages.push(message);
+      // detect changes manually since the update is happening outside of Angular
+      this.cdr.detectChanges();
+    });
   }
   ngAfterViewInit() {
     // Scroll to bottom of chat
@@ -51,7 +71,7 @@ export class ChatroomComponent extends AppComponent {
   fetchMessages(senderId: number, receiverId: number) {
     this.http
       .get(
-        `http://localhost:3000/messages?senderId=${senderId}&receiverId=${receiverId}&page=1&pageSize=10`
+        `http://localhost:3000/messages?senderId=${senderId}&receiverId=${receiverId}&page=1&pageSize=1000`
       )
       .subscribe((data) => {
         this.userMessages = [];
@@ -68,11 +88,13 @@ export class ChatroomComponent extends AppComponent {
       });
     return this.userMessages;
   }
+
   searchChat(searchQuery: string) {
     this.http.get(`http://localhost:3000/users/search?match=${searchQuery}`).subscribe(
       (users: any) => this.userMatches = users
     );
   }
+
   fetchChat(userId: number) {
     this.http.get(`http://localhost:3000/users/searchid?id=${userId}`).subscribe((data) => {
       Object.entries(data).forEach(([key, value]) => {
@@ -82,16 +104,21 @@ export class ChatroomComponent extends AppComponent {
       });
     });
   }
+
   fetchChats(userId: number, userName: string) {
     this.fetchChat(userId);
     this.fetchMessages(this.myId, userId);
+    this.sendDisabled = false;
+    console.log(this.sendDisabled);
     return this.currentUser;
   }
+
   fetchCurrentUser() {
     const first = 24; // Decide which is the default chat
     this.fetchChat(first);
     this.fetchMessages(this.myId, first);
   }
+
   sendMessage() {
     if (!this.newMessage) return;
     const body = {senderId: this.myId, receiverId: this.currentUser.id, content: this.newMessage}

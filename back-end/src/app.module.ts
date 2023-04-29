@@ -11,7 +11,6 @@ import { Message } from './message.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { WebsocketGateway } from './websocket.gateway';
-import { io } from 'socket.io-client';
 
 @Module({
   imports: [
@@ -32,12 +31,6 @@ import { io } from 'socket.io-client';
     TypeOrmModule.forFeature([User, Message]),
   ],
   controllers: [AuthController, UserController, MessageController],
-  providers: [AuthService, UserService, MessageService, WebsocketGateway, {
-    provide: 'WS_SERVER',
-    useValue: io('http://localhost:3000')
-  }, {
-    provide: 'IoAdapter',
-    useClass: IoAdapter,
-  }],
+  providers: [AuthService, UserService, MessageService, IoAdapter, WebsocketGateway],
 })
 export class AppModule {}
