@@ -21,9 +21,5 @@
       </svg>
     </div>
   </button>
-
-  <button [ngClass]="{'isnotA':isAuthenticated}" class="hover:text-gray-900" (click)="logout()">Logout</button>
-
-
-
+  <button *ngIf="isAuthenticated()" (click)="logout()">Logout</button>
 </div>

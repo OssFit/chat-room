@@ -8,20 +8,17 @@ import { Router } from '@angular/router';
   templateUrl:'./header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent  {
-  // isAuthenticated: boolean = false;
+export class HeaderComponent {
+  isLoggedIn = false;
 
   constructor(private Auth: AuthService, private router: Router) {}
 
-  isAuthenticated=localStorage.length!==0
-
-
-  ngOnInit(): void {
-    this.Auth.isAuthenticated;
-   }
-
   logout() {
     this.Auth.logout();
+  }
+
+  isAuthenticated(){
+    return this.Auth.isAuth();
   }
 }
 
