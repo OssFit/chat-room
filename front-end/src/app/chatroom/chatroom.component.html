@@ -100,7 +100,7 @@
           >
             <div
               class="flex items-center pr-10"
-              *ngIf="message.senderId != myId"
+              *ngIf="message.senderId != currentUser.id"
             >
               <img
                 src="https://i.imgur.com/IAgGUYF.jpg"
@@ -116,10 +116,9 @@
                 }}</span></span
               >
             </div>
-
             <div
               class="flex justify-end pt-2 px-5"
-              *ngIf="message.senderId == myId"
+              *ngIf="message.senderId == currentUser.id"
             >
               <span
                 class="bg-green-900 h-auto text-gray-200 text-2xl font-normal p-1 rounded-sm px-1 items-end flex justify-end"
