@@ -47,7 +47,7 @@ export class ChatroomComponent extends AppComponent {
     this.messagesElem.changes.subscribe(() =>
       this.messagesList.nativeElement.scrollTop = this.messagesList.nativeElement.scrollHeight
     );
-  } 
+  }
   fetchMessages(senderId: number, receiverId: number) {
     this.http
       .get(
@@ -57,10 +57,13 @@ export class ChatroomComponent extends AppComponent {
         this.userMessages = [];
         Object.entries(data).forEach(([key, value]) => {
           this.userMessages.push(value);
-          value.createdAt = new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          });
+
+          value.createdAt=this.userMessages.map((e)=>new Date(e.createdAt).toLocaleTimeString('es-ES', { hour12: false,hour:'2-digit',minute:'2-digit' }))
+          value.createdAt=value.createdAt.pop()
+          // value.createdAt = new Date().toLocaleTimeString([], {
+          //   hour: '2-digit',
+          //   minute: '2-digit',
+          // });
         });
       });
     return this.userMessages;
@@ -100,7 +103,7 @@ export class ChatroomComponent extends AppComponent {
           minute: '2-digit',
         });
         this.userMessages.push(data)
-      }
-    });
+      }    });
   }
+
 }
