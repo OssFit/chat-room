@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+*
+*::after,
+*::before{
+  margin:0
+}
+
+:root{
+  --bg-color:'black';
+  --text-color: '#343A40'
+}
+
+[data-theme="dark"]{
+  --bg-color:'white';
+  --text-color:"white";
+}
+

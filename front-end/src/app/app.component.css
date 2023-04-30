@@ -1,0 +1,12 @@
+/* Estilos para texto en modo oscuro */
+
+.wrapper{
+height: 100vh;
+width:100vw;
+background-color: var(--bg-color);
+box-sizing: border-box;
+}
+.text-color{
+  color: var(--text-color);
+}
+
