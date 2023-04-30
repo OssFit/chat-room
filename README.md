@@ -7,7 +7,8 @@ You must Create a chat room app, whith an Authorization Flow, Search Capabilitie
 ---
 
 Required Technology Stack:
-- Angular 
+
+- Angular
 - NestJS/NodeJS
 - Postgres
 - Docker
@@ -23,7 +24,7 @@ Required Technology Stack:
 
 Users should be able to login using email and password.
 
-Users should be able to sign up into the app. During the sign up they should need to provide their email, phone number, first and last name. 
+Users should be able to sign up into the app. During the sign up they should need to provide their email, phone number, first and last name.
 
 Users should be able to log out of the platform.
 
@@ -33,6 +34,4 @@ Users should be able to search users by email, phone number first and last name.
 
 ### Messaging Flow
 
-Users should be able to send messages to each other with 
-
-
+Users should be able to send messages to each other with
